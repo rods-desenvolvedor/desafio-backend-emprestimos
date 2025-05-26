@@ -1,26 +1,39 @@
 package com.desafio.emprestimo.entity;
 
-import java.util.UUID;
-
+import java.math.BigDecimal;
 import com.desafio.emprestimo.entity.enums.TipoEmprestimo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "emprestimos")
 public class Emprestimo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    public Emprestimo() {}
+
+    public Emprestimo(TipoEmprestimo tipoEmprestimo)
+    {
+        this.tipoEmprestimo = tipoEmprestimo;
+        this.taxa = tipoEmprestimo.getTaxa();
+    }
 
     private TipoEmprestimo tipoEmprestimo;
    
-    private int taxaInteresse;
+    private BigDecimal taxa;
+
+    public TipoEmprestimo getTipoEmprestimo() {
+        return tipoEmprestimo;
+    }
+
+    public void setTipoEmprestimo(TipoEmprestimo tipoEmprestimo) {
+        this.tipoEmprestimo = tipoEmprestimo;
+    }
+
+    public BigDecimal getTaxa() {
+        return taxa;
+    }
+
+    public void setTaxa(BigDecimal taxa) {
+        this.taxa = taxa;
+    }
+
+    
 
     
 }
