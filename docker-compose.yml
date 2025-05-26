@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: container_desafios_postgres
+    environment:
+      POSTGRES_USER: rods
+      POSTGRES_PASSWORD: 3001
+      POSTGRES_DB: db_emprestimos
+    ports:
+      - "5410:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+    image: docker-spring-boot-postgres:latest
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db_emprestimos
+      - SPRING_DATASOURCE_USERNAME=rods
+      - SPRING_DATASOURCE_PASSWORD=3001
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+    ports:
+      - "5500:8080"
+
+volumes:
+  postgres_data:
