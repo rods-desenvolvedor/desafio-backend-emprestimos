@@ -60,6 +60,11 @@ public class ClienteService {
 
     }
 
+    public void apagarCliente(UUID idCliente)
+    {
+        clienteRepository.deleteById(idCliente);
+    }
+
     public EmprestimosResponseDto verificarEmprestimosDisponiveis(UUID idCliente)
     {
         Cliente cliente = clienteRepository.findById(idCliente)
