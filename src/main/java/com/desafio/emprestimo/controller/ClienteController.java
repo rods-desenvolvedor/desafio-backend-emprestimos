@@ -1,7 +1,9 @@
 package com.desafio.emprestimo.controller;
 
+import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,12 @@ public class ClienteController {
     public ClienteResponseDto cadastrarCliente(@RequestBody ClienteRequestDto clienteRequestDto)
     {
         return clienteService.cadastrarCliente(clienteRequestDto);
+    }
+
+    @GetMapping("/listar")
+    public List<ClienteResponseDto> listarClientes()
+    {
+        return clienteService.listarClientes();
     }
 
     @PostMapping("/{idCliente}/verificar-emprestimos")
