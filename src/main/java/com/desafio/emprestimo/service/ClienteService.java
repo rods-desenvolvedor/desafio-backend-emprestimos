@@ -44,6 +44,22 @@ public class ClienteService {
         return clienteRepository.findAll().stream().map(ClienteResponseDto::new).toList();
     }
 
+    public ClienteResponseDto atualizarCliente(UUID idCliente, ClienteRequestDto clienteRequestDto)
+    {
+        Cliente cliente = clienteRepository.findById(idCliente)
+        .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        
+        cliente.setNome(clienteRequestDto.nome());
+        cliente.setIdade(clienteRequestDto.idade());
+        cliente.setRenda(clienteRequestDto.renda());
+        cliente.setEstado(clienteRequestDto.estado());
+
+        clienteRepository.save(cliente);
+
+        return new ClienteResponseDto(cliente);
+
+    }
+
     public EmprestimosResponseDto verificarEmprestimosDisponiveis(UUID idCliente)
     {
         Cliente cliente = clienteRepository.findById(idCliente)
