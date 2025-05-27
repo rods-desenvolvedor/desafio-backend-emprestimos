@@ -39,6 +39,11 @@ public class ClienteService {
         return new ClienteResponseDto(clienteSalvo);
     }
 
+    public List<ClienteResponseDto> listarClientes()
+    {
+        return clienteRepository.findAll().stream().map(ClienteResponseDto::new).toList();
+    }
+
     public EmprestimosResponseDto verificarEmprestimosDisponiveis(UUID idCliente)
     {
         Cliente cliente = clienteRepository.findById(idCliente)
