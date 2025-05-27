@@ -17,6 +17,8 @@ import com.desafio.emprestimo.controller.dtos.ClienteResponseDto;
 import com.desafio.emprestimo.controller.dtos.EmprestimosResponseDto;
 import com.desafio.emprestimo.service.ClienteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
@@ -29,30 +31,43 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
+    @Operation(summary = "Cadastrar novo cliente",
+     description = "Faz o cadastro de um novo cliente no sistema")
     @PostMapping("/cadastrar")
     public ClienteResponseDto cadastrarCliente(@RequestBody ClienteRequestDto clienteRequestDto)
     {
         return clienteService.cadastrarCliente(clienteRequestDto);
     }
 
+
+    @Operation(summary = "Listar os clientes",
+    description = "Retorna todos os clientes salvos no sistema")
     @GetMapping("/listar")
     public List<ClienteResponseDto> listarClientes()
     {
         return clienteService.listarClientes();
     }
 
+
+    @Operation(summary = "Apagar um cliente", 
+    description = "Apaga um cliente a partir do ID(UUID) do mesmo")
     @DeleteMapping("/{idCliente}/apagar")
     public void apagarCliente(@PathVariable UUID idCliente)
     {
         clienteService.apagarCliente(idCliente);
     }
 
+    @Operation(summary = "Atualizar um cliente",
+    description = "Atualiza os dados de um cliente a partir do ID(UUID) - É necessário passar TODOS os dados")
     @PutMapping("/{idCliente}/atualizar")
     public ClienteResponseDto atualizarCliente(@PathVariable UUID idCliente,@RequestBody ClienteRequestDto clienteRequestDto)
     {
         return clienteService.atualizarCliente(idCliente, clienteRequestDto);
     }
 
+
+    @Operation(summary = "Verificar os emprestimos disponiveis",
+    description = "Serviço principal - Retorna os emprestimos disponiveis de um cliente a partir das suas informações de renda e UF")
     @PostMapping("/{idCliente}/verificar-emprestimos")
     public EmprestimosResponseDto verificarEmprestimosDisponiveis(@PathVariable UUID idCliente)
     {
